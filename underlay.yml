@@ -1,0 +1,18 @@
+---
+devices:
+  leaf1-DC1:
+    interfaces:
+      loopback0: 192.168.101.11/32
+      loopback1: 192.168.102.11/32
+  leaf2-DC1:
+    interfaces:
+      loopback0: 192.168.101.12/32
+      loopback1: 192.168.102.11/32
+  leaf3-DC1:
+    interfaces:
+      loopback0: 192.168.101.13/32
+      loopback1: 192.168.102.13/32
+  leaf4-DC1:
+    interfaces: 
+      loopback0: 192.168.101.14/32
+      loopback1: 192.168.102.13/32

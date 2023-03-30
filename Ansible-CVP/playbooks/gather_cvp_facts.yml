@@ -1,0 +1,10 @@
+---
+- name: Gather facts for CVP
+  hosts: cvp1
+  tasks:
+    - name: Pull facts from CVP
+      arista.cvp.cv_facts_v3:
+      register: cv_facts
+    - name: Display facts
+      debug:
+        msg: "{{ cv_facts }}"

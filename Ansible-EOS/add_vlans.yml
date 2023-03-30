@@ -1,0 +1,12 @@
+---
+- name: Add VLANs
+  hosts: Leafs_DC1, Leafs_DC2
+  vars_files:
+    - vars/leafs_DC1.yml
+  tasks:
+    - name: Add a single VLANs
+      arista.eos.vlans:
+        config:
+          - vlan_id: "{{ item }}"
+            state: active
+      loop: "{{ vlans }}"

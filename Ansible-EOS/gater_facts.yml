@@ -1,0 +1,8 @@
+---
+- name: What Ansible facts are gathered?
+  hosts: leaf1-DC1
+  gather_facts: true
+  tasks:
+    - name: Print facts dictionary
+      debug:
+        msg: "{{ ansible_facts }}"

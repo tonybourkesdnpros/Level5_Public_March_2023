@@ -1,0 +1,7 @@
+---
+- name: Playing with Ansible Variables
+  hosts: leaf1-DC1
+  tasks:
+    - name: Print out a Variables
+      debug:
+        msg: "{{ nested['dictionaries']['are']['really']['cool'] }}"

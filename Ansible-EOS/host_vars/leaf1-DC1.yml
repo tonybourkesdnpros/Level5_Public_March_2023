@@ -1,0 +1,29 @@
+vlans:
+  - 10
+  - 20
+  - 30
+  - 43
+  - 5
+  - 356
+  - 2311
+  - 124
+  - 1456
+  - 323
+  - 32
+  - 999
+  - 991
+  - 1234
+
+versions_of_enterprise:
+  1701:
+    captain: Kirk
+  1701-A:
+    captain: Kirk
+  1701-B:
+  1701-C:
+  1701-D:
+    captain: Picard
+  1701-E:
+    captain: Picard
+  1701-F:
+  1701-J:

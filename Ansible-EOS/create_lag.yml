@@ -1,0 +1,14 @@
+---
+- name: Create po67
+  hosts: Leafs_DC1
+  tasks:
+  - name: Merge provided LAG attributes with existing device configuration
+    arista.eos.eos_lag_interfaces:
+      config:
+        - name: 67
+          members:
+            - member: Ethernet6
+              mode: active
+            - member: Ethernet7
+              mode: active
+      state: merged

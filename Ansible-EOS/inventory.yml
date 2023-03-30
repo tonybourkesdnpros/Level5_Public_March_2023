@@ -1,0 +1,45 @@
+---
+all:
+  vars:
+    # For CLI connection
+    # ansible_connection: network_cli
+    # ansible_user: arista
+    # ansible_network_os: eos
+    # ansible_become: yes
+    # ansible_become_method: enable
+   # This section for connecting via eAPI
+
+  children:
+    All_Leafs:
+      hosts: 
+        leaf[1:4]-DC[1:2]
+    DC1:
+      children:
+        Spines_DC1:
+          hosts:
+            spine[1:3]-DC1:
+        Leafs_DC1:
+          hosts: 
+            leaf[1:4]-DC1:
+        Left_Leafs_DC1:
+          hosts:  
+            leaf[1:4:2]-DC1: # leaf1, leaf3
+        Right_Leafs_DC1:
+          hosts:  
+            leaf[2:4:2]-DC1:  # leaf2, leaf4
+    DC2:
+      children:
+        Spines_DC2:
+          hosts:
+            spine[1:3]-DC2
+        Leafs_DC2:
+          hosts: 
+            leaf[1:4]-DC2
+        Left_Leafs_DC2:
+          hosts:  
+            leaf[1:4:2]-DC2: # leaf1, leaf3
+        Right_Leafs_DC2:
+          hosts:  
+            leaf[2:4:2]-DC2:  # leaf2, leaf4
+
+

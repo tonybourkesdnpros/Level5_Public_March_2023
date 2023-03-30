@@ -1,0 +1,19 @@
+captains:
+  Voyager: Janeway
+  Enterprise: Kirk
+  Enterprise-D: Picard
+  "Titan-A": Shaw
+  Titan: Riker
+nested:
+  dictionaries:
+    are:
+      really:
+        cool: yes
+ansible_connection: httpapi
+ansible_user: arista
+ansible_password: aristat0fe
+ansible_network_os: eos
+ansible_become: yes
+ansible_httpapi_port: 443
+ansible_httpapi_use_ssl: True
+ansible_httpapi_validate_certs: False

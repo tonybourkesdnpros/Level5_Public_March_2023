@@ -1,0 +1,9 @@
+---
+- name: Upload partial configs to EOS directly
+  hosts: Leafs_DC1
+  tasks:
+  - name: Upload to EOS device
+    arista.eos.eos_config:
+      src: "../configs/vlan.cfg"
+      save_when: always
+      replace: line

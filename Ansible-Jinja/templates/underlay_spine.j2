@@ -1,0 +1,48 @@
+{% for interface in underlay['devices'][inventory_hostname]['interfaces'] %}
+interface {{ interface }}
+{% if 'Ethernet' in interface %}
+   no switchport
+{% endif %}
+   ip address {{ underlay['devices'][inventory_hostname]['interfaces'][interface]['ipv4'] }}/{{ underlay['devices'][inventory_hostname]['interfaces'][interface]['mask'] }}
+   mtu {{ underlay['DC_global']['MTU'] }}
+{% endfor %}
+
+ip prefix-list LOOPBACK
+   seq 10 permit 192.168.101.0/24 eq 32
+   seq 20 permit 192.168.102.0/24 eq 32
+   seq 30 permit 192.168.201.0/24 eq 32
+   seq 40 permit 192.168.202.0/24 eq 32
+   seq 50 permit 192.168.253.0/24 eq 32
+
+
+route-map LOOPBACK permit 10
+   match ip address prefix-list LOOPBACK
+
+peer-filter LEAF-AS-RANGE
+   10 match as-range 65000-65534 result accept
+
+
+router bgp {{ underlay['devices'][inventory_hostname]['BGP']['ASN'] }}
+   router-id {{ underlay['devices'][inventory_hostname]['interfaces']['loopback0']['ipv4'] }}
+
+
+   no bgp default ipv4-unicast
+   maximum-paths 3
+   distance bgp 20 200 200
+
+   {% set DC_list = inventory_hostname.split('-') %}
+   {% set DC = DC_list[1] %}
+
+   bgp listen range {{ underlay['DC_global'][DC]['p2p'] }} peer-group LEAF_Underlay peer-filter LEAF-AS-RANGE
+  
+   neighbor LEAF_Underlay peer group
+   neighbor LEAF_Underlay send-community
+   neighbor LEAF_Underlay maximum-routes 12000
+
+  
+
+   redistribute connected route-map LOOPBACK
+   
+   address-family ipv4
+      neighbor LEAF_Underlay activate
+      redistribute connected route-map LOOPBACK

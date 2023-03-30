@@ -1,0 +1,9 @@
+---
+- name: Upload partial configs to EOS directly
+  hosts: DC1, DC2
+  tasks:
+  - name: Upload to EOS device
+    arista.eos.eos_config:
+      src: "../configs/{{ inventory_hostname }}_underlay.cfg"
+      save_when: always
+      replace: line

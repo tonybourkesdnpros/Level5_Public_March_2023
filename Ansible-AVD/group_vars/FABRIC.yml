@@ -3,8 +3,7 @@
 fabric_name: FABRIC 
 # Match with the file name (case sensitive) and the inventory group at the top of the fabric
 
-underlay_rfc5549: true
-
+evpn_vlan_aware_bundles: true
 
 
 p2p_uplinks_mtu: 1500

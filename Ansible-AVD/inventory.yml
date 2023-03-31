@@ -50,36 +50,9 @@ all:
                   hosts: 
                     borderleaf1-DC1:
                     borderleaf2-DC1:
-        DC2_FABRIC:
-          children: 
-            DC2_SPINES:
-              vars:
-                type: spine
-              hosts:
-                spine1-DC2:
-                spine2-DC2:
-                spine3-DC2:
-            DC2_LEAFS:
-              vars:
-                type: l3leaf
-              children:
-                mlag4:
-                  hosts:
-                    leaf1-DC2:
-                    leaf2-DC2:
-                mlag5:
-                  hosts:
-                    leaf3-DC2:
-                    leaf4-DC2:
-                mlag6:
-                  hosts: 
-                    borderleaf1-DC2:
-                    borderleaf2-DC2:
         EVPN_SERVICES:
           children:
             DC1_LEAFS:
-            DC2_LEAFS:          
         ENDPOINTS:
           children: 
             DC1_LEAFS:
-            DC2_LEAFS:

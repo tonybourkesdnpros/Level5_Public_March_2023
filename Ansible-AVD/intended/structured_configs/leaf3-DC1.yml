@@ -31,39 +31,26 @@ router_bgp:
     peer_groups:
       MLAG-IPv4-UNDERLAY-PEER:
         activate: true
-        next_hop:
-          address_family_ipv6_originate: true
       IPv4-UNDERLAY-PEERS:
         activate: true
-        next_hop:
-          address_family_ipv6_originate: true
       EVPN-OVERLAY-PEERS:
         activate: false
-  neighbor_interfaces:
-    Vlan4093:
+  neighbors:
+    10.255.251.5:
       peer_group: MLAG-IPv4-UNDERLAY-PEER
-      remote_as: '65103'
       description: leaf4-DC1
-    Ethernet3:
+    192.168.103.12:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65100'
       description: spine1-DC1_Ethernet4
-    Ethernet4:
+    192.168.103.14:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65100'
       description: spine2-DC1_Ethernet4
-    Ethernet5:
+    192.168.103.16:
       peer_group: IPv4-UNDERLAY-PEERS
       remote_as: '65100'
       description: spine3-DC1_Ethernet4
-  redistribute_routes:
-    connected:
-      route_map: RM-CONN-2-BGP
-  address_family_evpn:
-    peer_groups:
-      EVPN-OVERLAY-PEERS:
-        activate: true
-  neighbors:
     192.168.101.111:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine1-DC1
@@ -76,6 +63,13 @@ router_bgp:
       peer_group: EVPN-OVERLAY-PEERS
       description: spine3-DC1
       remote_as: '65100'
+  redistribute_routes:
+    connected:
+      route_map: RM-CONN-2-BGP
+  address_family_evpn:
+    peer_groups:
+      EVPN-OVERLAY-PEERS:
+        activate: true
   vrfs:
     VRF_1:
       router_id: 192.168.101.3
@@ -92,31 +86,21 @@ router_bgp:
       neighbors:
         10.255.251.5:
           peer_group: MLAG-IPv4-UNDERLAY-PEER
-  vlans:
-    10:
-      tenant: ACME
-      rd: 192.168.101.3:10010
+  vlan_aware_bundles:
+    VRF_1:
+      rd: 192.168.101.3:100
       route_targets:
         both:
-        - 10010:10010
+        - 100:100
       redistribute_routes:
       - learned
-    20:
-      tenant: ACME
-      rd: 192.168.101.3:10020
-      route_targets:
-        both:
-        - 10020:10020
-      redistribute_routes:
-      - learned
+      vlan: 10,20
 static_routes:
 - vrf: default
   destination_address_prefix: 0.0.0.0/0
   gateway: 192.168.0.1
 service_routing_protocols_model: multi-agent
 ip_routing: true
-ipv6_unicast_routing: true
-ip_routing_ipv6_interfaces: true
 vlan_internal_order:
   allocation: ascending
   range:
@@ -178,7 +162,7 @@ vlan_interfaces:
     description: MLAG_PEER_L3_PEERING
     shutdown: false
     mtu: 1500
-    ipv6_enable: true
+    ip_address: 10.255.251.4/31
   Vlan4094:
     description: MLAG_PEER
     shutdown: false
@@ -255,7 +239,7 @@ ethernet_interfaces:
     shutdown: false
     mtu: 1500
     type: routed
-    ipv6_enable: true
+    ip_address: 192.168.103.13/31
   Ethernet4:
     peer: spine2-DC1
     peer_interface: Ethernet4
@@ -264,7 +248,7 @@ ethernet_interfaces:
     shutdown: false
     mtu: 1500
     type: routed
-    ipv6_enable: true
+    ip_address: 192.168.103.15/31
   Ethernet5:
     peer: spine3-DC1
     peer_interface: Ethernet4
@@ -273,7 +257,7 @@ ethernet_interfaces:
     shutdown: false
     mtu: 1500
     type: routed
-    ipv6_enable: true
+    ip_address: 192.168.103.17/31
   Ethernet6:
     peer: host2-DC1
     peer_interface: Eth1

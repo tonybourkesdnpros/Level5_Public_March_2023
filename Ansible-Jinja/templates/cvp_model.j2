@@ -1,0 +1,33 @@
+---
+configlet_list:
+
+
+{% for host in underlay['devices'] %}
+  {{ host }}_underlay: 
+{% endfor %}
+
+
+
+
+cvp_devices:
+{% for host in underlay['devices'] %}
+{% set DC_list = host.split('-') %}
+{% set DC = DC_list[1] %}
+{% if 'leaf' in host %}
+{% set role = 'Leaf'%}
+{% endif %}
+{% if 'spine' in host %}
+{% set role = 'Spine'%}
+{% endif %}
+  - fqdn: {{ host }}
+    parentContainerName: {{ role }}-{{ DC }}
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf1-DC1-BASE'
+{% if underlay['devices'][host]['MLAG'] == 'Odd' %}
+      - 'MLAG-Left'
+{% endif %}
+{% if underlay['devices'][host]['MLAG'] == 'Even' %}
+      - 'MLAG-Right'
+{% endif %}
+{% endfor %}

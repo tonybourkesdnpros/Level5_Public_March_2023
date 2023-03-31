@@ -1,0 +1,19 @@
+---
+configlet_list:
+  MLAG-Left: "{{ lookup('file', '../configs/MLAG-Left.cfg') }}"
+  MLAG-Right: "{{ lookup('file', '../configs/MLAG-Right.cfg') }}"
+
+cvp_devices:
+  - fqdn: leaf1-DC1
+    parentContainerName: Leaf-DC1
+    configlets:
+      - 'ATD-INFRA'
+      - 'leaf1-DC1-BASE'
+      - 'MLAG-Left'
+  - fqdn: leaf2-DC1
+    parentContainerName: Leaf-DC1
+    configlets:
+      - 'MLAG-Right'
+      - 'leaf2-DC1-BASE'
+      - 'ATD-INFRA'
+  

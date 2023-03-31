@@ -1,0 +1,13 @@
+---
+- name: Generate the CVP data model
+  hosts: cvp1
+  tasks:
+    - name: Load up Variable as a dictonary
+      include_vars:
+        file: ../vars/underlay.yml
+        name: underlay
+    - name: Generate config from template for leafs
+      template:
+        src: "{{ lookup('env','PWD') }}/templates/cvp_model.j2"
+        dest: "{{ lookup('env','PWD') }}/vars/CVP_model.yml"
+        mode: '0644'

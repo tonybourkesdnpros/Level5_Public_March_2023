@@ -10,6 +10,21 @@ all:
    # This section for connecting via eAPI
 
   children:
+    CVP_cluster:
+      hosts:
+        cvp1:
+          ansible_httpapi_host: 192.168.0.5
+          ansible_host: 192.168.0.5
+          ansible_user: arista
+          ansible_password: aristat0fe
+          ansible_connection: httpapi
+          ansible_httpapi_use_ssl: True
+          ansible_httpapi_validate_certs: False
+          ansible_network_os: eos
+          ansible_httpapi_port: 443
+          # Configuration to get Virtual Env information
+          # Line to change something without changing anything
+          ansible_python_interpreter: /usr/bin/python3
     All_Leafs:
       hosts: 
         leaf[1:4]-DC[1:2]

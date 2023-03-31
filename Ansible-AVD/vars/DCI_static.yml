@@ -1,0 +1,33 @@
+---
+DCI_CONFIGLETS:
+
+
+  AVD-DCI: "{{ lookup('file', '../configlets/AVD-DCI.cfg') }}"
+  DCI_borderleaf1-DC1: "{{ lookup('file', '../configlets/DCI_borderleaf1-DC1.cfg') }}"
+  DCI_borderleaf2-DC1: "{{ lookup('file', '../configlets/DCI_borderleaf2-DC1.cfg') }}"
+  DCI_borderleaf1-DC2: "{{ lookup('file', '../configlets/DCI_borderleaf1-DC2.cfg') }}"
+  DCI_borderleaf2-DC2: "{{ lookup('file', '../configlets/DCI_borderleaf2-DC2.cfg') }}"
+
+DCI_DEVICES:
+  - fqdn: DCI
+    parentContainerName: DCI
+    configlets:
+      - 'AVD-DCI'
+
+  - fqdn: borderleaf1-DC1
+    parentContainerName: mlag3
+    configlets:
+      - 'DCI_borderleaf1-DC1'
+  - fqdn: borderleaf2-DC1
+    parentContainerName: mlag3
+    configlets:
+      - 'DCI_borderleaf2-DC1' 
+
+  - fqdn: borderleaf1-DC2
+    parentContainerName: mlag6
+    configlets:
+      - 'DCI_borderleaf1-DC2'
+  - fqdn: borderleaf2-DC2
+    parentContainerName: mlag6
+    configlets:
+      - 'DCI_borderleaf2-DC2' 

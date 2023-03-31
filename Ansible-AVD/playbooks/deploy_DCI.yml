@@ -1,0 +1,16 @@
+---
+- name: Upload and apply static DCI configlets
+  hosts: cvp1
+
+  vars:
+    path: "{{lookup('env','PWD')}}"
+  vars_files:
+    - ../vars/DCI_static.yml
+
+  tasks:
+    - name: "Upload DCI static configlets"
+      arista.cvp.cv_configlet_v3:
+        configlets: "{{ DCI_CONFIGLETS }}"
+    - name: "Apply DCI static configlets"
+      arista.cvp.cv_device_v3:
+        devices: "{{ DCI_DEVICES }}"
